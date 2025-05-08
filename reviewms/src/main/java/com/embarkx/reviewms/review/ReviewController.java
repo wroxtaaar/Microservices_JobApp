@@ -52,6 +52,7 @@ public class ReviewController {
     @PutMapping("{reviewId}")
     public ResponseEntity<String> updateReview(@PathVariable Long reviewId,
                                                @RequestBody Review review) {
+//        boolean isUpdated = reviewService.updateReview( review.getCompanyId(), reviewId, review);\
         boolean isUpdated = reviewService.updateReview(reviewId, review);
         if(!isUpdated) {
             return new ResponseEntity<>("Review not found!", HttpStatus.NOT_FOUND);
