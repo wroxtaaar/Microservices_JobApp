@@ -1,5 +1,6 @@
 package com.embarkx.jobms.job;
 
+import com.embarkx.jobms.job.dto.JobWithCompanyDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,8 +16,8 @@ public class JobController {
     private final JobService jobService;
 
     @GetMapping
-    public ResponseEntity<List<Job>> findAll() {
-        List<Job> jobs= jobService.findAll();
+    public ResponseEntity<List<JobWithCompanyDTO>> findAll() {
+        List<JobWithCompanyDTO> jobs= jobService.findAll();
         return new ResponseEntity<>(jobs, HttpStatus.OK);
     }
 
