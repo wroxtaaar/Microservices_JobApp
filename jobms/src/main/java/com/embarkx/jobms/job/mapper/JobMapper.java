@@ -8,8 +8,9 @@ import com.embarkx.jobms.job.external.Review;
 import java.util.List;
 
 public class JobMapper {
-    public static JobDTO mapToJobWithCompanyDTO (Job job, Company company,
-                                                 List<Review> reviews) {
+
+    public static JobDTO mapToJobWithCompanyDTO(Job job, Company company,
+            List<Review> reviews) {
         return new JobDTO(
                 job.getId(),
                 job.getTitle(),
@@ -19,7 +20,6 @@ public class JobMapper {
                 job.getLocation(),
                 job.getCompanyId(),
                 company,
-                reviews
-        );
+                reviews);
     }
 }
