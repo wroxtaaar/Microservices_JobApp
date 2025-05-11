@@ -4,6 +4,8 @@ package com.embarkx.companyms.company.impl;
 import com.embarkx.companyms.company.Company;
 import com.embarkx.companyms.company.CompanyRepository;
 import com.embarkx.companyms.company.CompanyService;
+import com.embarkx.companyms.company.clients.ReviewClient;
+import com.embarkx.companyms.company.dto.ReviewMessage;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,7 @@ import java.util.Optional;
 public class CompanyServiceImpl implements CompanyService {
 
     private final CompanyRepository companyRepository;
+    private ReviewClient reviewClient;
 
     @Override
     public List<Company> getAllCompanies() {
@@ -55,6 +58,16 @@ public class CompanyServiceImpl implements CompanyService {
             return true;
         }        // If the company with the given ID does not exist, return false
         return false;
+    }
+
+    @Override
+    public void updateCompanyRating(ReviewMessage reviewMessage) {
+        System.out.println(reviewMessage.getDescription());
+        Company company = companyRepository.findById(reviewMessage.getCompanyId())
+                .orElseThrow(() -> new RuntimeException("Company not found"));
+        double averageRating = reviewClient.getAverageRatingForCompany(reviewMessage.getCompanyId());
+        company.setRating(averageRating);
+        companyRepository.save(company);
     }
 
 }

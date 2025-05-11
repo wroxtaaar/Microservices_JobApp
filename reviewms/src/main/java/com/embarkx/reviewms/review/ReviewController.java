@@ -1,5 +1,6 @@
 package com.embarkx.reviewms.review;
 
+import com.embarkx.reviewms.review.messaging.ReviewMessageProducer;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,26 +14,19 @@ import java.util.List;
 public class ReviewController {
 
     private ReviewService reviewService;
+    private ReviewMessageProducer reviewMessageProducer;
 
     @GetMapping
     public ResponseEntity<List<Review>> getAllReviews(@RequestParam Long companyId) {
         return new ResponseEntity<>(reviewService.getAllReviews(companyId), HttpStatus.OK);
     }
 
-//    @GetMapping("/reviews/{reviewId}")
-//    public ResponseEntity<Review> getReviewById(@PathVariable Long reviewId) {
-//        Review review = reviewService.getReviewById(reviewId);
-//        if(review == null) {
-//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//        }
-//        return new ResponseEntity<>(review, HttpStatus.OK);
-//    }
-
 
     @PostMapping
     public ResponseEntity<String> createReview(@RequestParam Long companyId, @RequestBody Review review) {
-        boolean IsReviewSaved = reviewService.addReview(companyId, review);
-        if (IsReviewSaved) {
+        boolean isReviewSaved = reviewService.addReview(companyId, review);
+        if (isReviewSaved) {
+            reviewMessageProducer.sendMessage(review);
             return new ResponseEntity<>("Review created successfully!", HttpStatus.CREATED);
         }
         return new ResponseEntity<>("Company not found!", HttpStatus.NOT_FOUND);
@@ -71,6 +65,15 @@ public class ReviewController {
     }
 
 
+    @GetMapping("/averageRating")
+    public Double getAverageRating(@RequestParam Long companyId) {
+        List<Review> reviewList = reviewService.getAllReviews(companyId);
+        double average = reviewList.stream()
+                .mapToDouble(Review::getRating)
+                .average()
+                .orElse(0.0);
+        return Math.round(average * 10.0) / 10.0;
+    }
 
 
 }

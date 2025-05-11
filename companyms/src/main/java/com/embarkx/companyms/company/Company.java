@@ -1,16 +1,11 @@
 package com.embarkx.companyms.company;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
-import java.util.List;
 
-@Data @AllArgsConstructor @NoArgsConstructor
-@Entity
+@Data @Entity
 public class Company {
 
     @Id
@@ -18,6 +13,7 @@ public class Company {
     private Long id;
     private String name;
     private String description;
+    private Double rating;
 
 //    @JsonIgnore
 //    @OneToMany(mappedBy = "company") //(mappedBy = "company") removed the x table that contained only ids
