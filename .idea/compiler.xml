@@ -8,6 +8,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="config-server" />
+        <module name="gateway" />
       </profile>
       <profile name="Annotation profile for service" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
@@ -27,6 +28,7 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="companyms" options="-parameters" />
       <module name="config-server" options="-parameters" />
+      <module name="gateway" options="-parameters" />
       <module name="jobms" options="-parameters" />
       <module name="reviewms" options="-parameters" />
       <module name="service" options="-parameters" />
