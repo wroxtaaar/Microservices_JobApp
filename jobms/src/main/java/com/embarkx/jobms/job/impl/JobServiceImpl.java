@@ -10,22 +10,16 @@ import com.embarkx.jobms.job.external.Company;
 import com.embarkx.jobms.job.external.Review;
 import com.embarkx.jobms.job.mapper.JobMapper;
 import lombok.AllArgsConstructor;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Service
 public class JobServiceImpl implements JobService {
 
     JobRepository jobRepository;
-    RestTemplate restTemplate;
     private CompanyClient companyClient;
     private ReviewClient reviewClient;
 
@@ -33,11 +27,17 @@ public class JobServiceImpl implements JobService {
     @Override
     public List<JobDTO> findAll() {
         List<Job> jobs = jobRepository.findAll();
-        return jobs.stream().map(this::convertToDto).collect(Collectors.toList());
+        return jobs.stream().map(this::convertToDto).toList();
     }
 
     private JobDTO convertToDto(Job job) {
-//        Company company = restTemplate.getForObject(
+        Company company = companyClient.getCompany(job.getCompanyId());
+        List<Review> reviews = reviewClient.getReviews(job.getCompanyId());
+        return JobMapper.mapToJobWithCompanyDTO(job, company, reviews);
+    }
+
+
+    //        Company company = restTemplate.getForObject(
 //                "http://COMPANY-SERVICE:8081/companies/" + job.getCompanyId(), Company.class);
 
 //        ResponseEntity<List<Review>> reviewResponse = restTemplate.exchange(
@@ -48,13 +48,6 @@ public class JobServiceImpl implements JobService {
 //                });
 
 //        List<Review> reviews = reviewResponse.getBody();
-
-        Company company = companyClient.getCompany(job.getCompanyId());
-
-        List<Review> reviews = reviewClient.getReviews(job.getCompanyId());
-
-        return JobMapper.mapToJobWithCompanyDTO(job, company, reviews);
-    }
 
 
     @Override
