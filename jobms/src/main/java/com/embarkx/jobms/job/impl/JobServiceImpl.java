@@ -10,27 +10,46 @@ import com.embarkx.jobms.job.external.Company;
 import com.embarkx.jobms.job.external.Review;
 import com.embarkx.jobms.job.mapper.JobMapper;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
+import io.github.resilience4j.retry.annotation.Retry;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@AllArgsConstructor
+@Log4j2
+//@RequiredArgsConstructor
+//@AllArgsConstructor
 @Service
 public class JobServiceImpl implements JobService {
 
     JobRepository jobRepository;
-    private CompanyClient companyClient;
-    private ReviewClient reviewClient;
+    private final CompanyClient companyClient;
+    private final ReviewClient reviewClient;
+    int attempt = 0;
 
+    public JobServiceImpl(ReviewClient reviewClient, CompanyClient companyClient, JobRepository jobRepository) {
+        this.reviewClient = reviewClient;
+        this.companyClient = companyClient;
+        this.jobRepository = jobRepository;
+    }
 
+//    @Override
+//    @CircuitBreaker(name="companyBreaker",
+//            fallbackMethod = "companyBreakerFallback")
+//    @Override
+//    @Retry(name="companyBreaker",
+//            fallbackMethod = "companyBreakerFallback")
     @Override
-    @CircuitBreaker(name="companyBreaker",
+    @RateLimiter(name="companyBreaker",
             fallbackMethod = "companyBreakerFallback")
     public List<JobDTO> findAll() {
         List<Job> jobs = jobRepository.findAll();
+        log.info("Attempt: {}", ++attempt);
         return jobs.stream().map(this::convertToDto).toList();
     }
 
