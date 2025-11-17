@@ -53,3 +53,30 @@ Spring Boot | Spring Cloud | OpenFeign | JPA | PostgreSQL | H2 | RabbitMQ
 Docker | Resilience4j | Spring Cloud Gateway | Eureka | Zipkin
 Java 17+ (or your version)
 
+
+---
+
+## 📂 Getting Started  
+### Prerequisites  
+- Java JDK 17+  
+- Docker & Docker Compose  
+- Git  
+
+### Run Locally  
+1. Clone the repository:  
+   ```bash
+   git clone https://github.com/wroxtaaar/Microservices_JobApp.git
+   cd Microservices_JobApp
+
+2. Start PostgreSQL (via Docker) if using production mode. Or skip for H2.
+
+---
+
+3. Build and run each module/service:
+
+cd service-reg && ./mvnw spring-boot:run
+cd config-server && ./mvnw spring-boot:run
+cd gateway && ./mvnw spring-boot:run
+cd companyms && ./mvnw spring-boot:run
+cd jobms && ./mvnw spring-boot:run
+cd reviewms && ./mvnw spring-boot:run
