@@ -74,9 +74,10 @@ Java 17+ (or your version)
 
 3. Build and run each module/service:
 
-cd service-reg && ./mvnw spring-boot:run
-cd config-server && ./mvnw spring-boot:run
-cd gateway && ./mvnw spring-boot:run
-cd companyms && ./mvnw spring-boot:run
-cd jobms && ./mvnw spring-boot:run
-cd reviewms && ./mvnw spring-boot:run
+   ```bash
+    cd service-reg && ./mvnw spring-boot:run
+    cd config-server && ./mvnw spring-boot:run
+    cd gateway && ./mvnw spring-boot:run
+    cd companyms && ./mvnw spring-boot:run
+    cd jobms && ./mvnw spring-boot:run
+    cd reviewms && ./mvnw spring-boot:run
