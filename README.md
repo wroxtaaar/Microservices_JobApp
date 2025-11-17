@@ -70,8 +70,6 @@ Java 17+ (or your version)
 
 2. Start PostgreSQL (via Docker) if using production mode. Or skip for H2.
 
----
-
 3. Build and run each module/service:
 
    ```bash
@@ -81,3 +79,32 @@ Java 17+ (or your version)
     cd companyms && ./mvnw spring-boot:run
     cd jobms && ./mvnw spring-boot:run
     cd reviewms && ./mvnw spring-boot:run
+
+4. docker-compose up --build
+   ```bash
+    docker-compose up --build
+   
+5. Access the API Gateway at http://localhost:8080 (or configured port) and use the REST endpoints for each service.
+
+---
+
+## 📊 Learning Outcomes
+
+- From this project I learned:
+- Microservices communication patterns 🔄
+- API Gateway routing & filtering 🌐
+- Fault tolerance & resilience patterns 🛡
+- Distributed tracing and observability 👁
+- Database migration: H2 → PostgreSQL 💾
+- Containerization and deployment with Docker 🐳
+
+---
+
+## 🎯 What’s Next?
+
+- ☸ Kubernetes — Deploy microservices on Kubernetes for orchestration and scalability
+- 🔧 Full CI/CD pipelines for automated builds & deployments
+- 🔐 Add Spring Security across services for authentication & authorization
+- 📈 Integrate Prometheus + Grafana for monitoring metrics and dashboards
+
+
