@@ -1,6 +1,6 @@
 # 🚀 Job Application Platform — Spring Boot Microservices
 
-A fully‐functional microservices-based job application platform built using Spring Boot, inspired by the tutorial series from **Faisal Memon (EmbarkX)**.  
+A fully‐functional microservices-based job application platform built using Spring Boot. 
 This project demonstrates a real-world microservices architecture: service discovery, API gateway, resiliency, messaging, monitoring, and containerized deployment.
 
 ---
