@@ -49,3 +49,7 @@ The project contains the following modules:
 
 ## 📦 Tech Stack  
 
+Spring Boot | Spring Cloud | OpenFeign | JPA | PostgreSQL | H2 | RabbitMQ
+Docker | Resilience4j | Spring Cloud Gateway | Eureka | Zipkin
+Java 17+ (or your version)
+
