@@ -1,29 +1,14 @@
--- Create databases only if they do NOT already exist
-DO
-$$
-BEGIN
-    -- COMPANY DB
-    IF NOT EXISTS (SELECT 1 FROM pg_database WHERE datname = 'company') THEN
-        CREATE DATABASE company;
-        RAISE NOTICE 'Database company created.';
-    ELSE
-        RAISE NOTICE 'Database company already exists.';
-    END IF;
+-- Create COMPANY database
+SELECT 'CREATE DATABASE company'
+    WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = 'company')
+    \gexec
 
-    -- JOB DB
-    IF NOT EXISTS (SELECT 1 FROM pg_database WHERE datname = 'job') THEN
-        CREATE DATABASE job;
-        RAISE NOTICE 'Database job created.';
-    ELSE
-        RAISE NOTICE 'Database job already exists.';
-    END IF;
+-- Create JOB database
+SELECT 'CREATE DATABASE job'
+    WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = 'job')
+    \gexec
 
-    -- REVIEW DB
-    IF NOT EXISTS (SELECT 1 FROM pg_database WHERE datname = 'review') THEN
-        CREATE DATABASE review;
-        RAISE NOTICE 'Database review created.';
-    ELSE
-        RAISE NOTICE 'Database review already exists.';
-    END IF;
-END
-$$;
+-- Create REVIEW database
+SELECT 'CREATE DATABASE review'
+    WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = 'review')
+    \gexec

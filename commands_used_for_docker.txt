@@ -42,6 +42,18 @@ docker logs pgadmin
 
 
 
+
+
+Host	postgres
+Port	5432
+Username	embarkx
+Password	embarkx
+Maintenance DB	postgres
+
+
+
+
+
 docker compose down --volumes --remove-orphans
 docker system prune -af
 docker volume prune -f
