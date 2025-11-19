@@ -1,0 +1,181 @@
+version: '3.9'
+
+services:
+
+  # ==========================
+  #  POSTGRESQL
+  # ==========================
+  postgres:
+    image: postgres:15
+    container_name: postgres
+    environment:
+      POSTGRES_USER: embarkx
+      POSTGRES_PASSWORD: embarkx
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./postgres-init.sql:/docker-entrypoint-initdb.d/postgres-init.sql
+    networks:
+      - microservices-net
+    restart: always
+
+
+  # ==========================
+  #  RABBITMQ
+  # ==========================
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - microservices-net
+    restart: always
+
+
+  # ==========================
+  #  ZIPKIN (Distributed Tracing)
+  # ==========================
+  zipkin:
+    image: openzipkin/zipkin
+    container_name: zipkin
+    ports:
+      - "9411:9411"
+    networks:
+      - microservices-net
+    restart: always
+
+
+  # ==========================
+  #  EUREKA SERVER
+  # ==========================
+  eureka:
+    build: ./service-reg
+    container_name: eureka
+    ports:
+      - "8761:8761"
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+    networks:
+      - microservices-net
+    depends_on:
+      - zipkin
+    restart: always
+
+
+  # ==========================
+  #  CONFIG SERVER
+  # ==========================
+  config-server:
+    build: ./config-server
+    container_name: config-server
+    ports:
+      - "8888:8888"
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+    networks:
+      - microservices-net
+    depends_on:
+      - eureka
+    restart: always
+
+
+  # ==========================
+  #  API GATEWAY
+  # ==========================
+  gateway:
+    build: ./gateway
+    container_name: gateway
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+    networks:
+      - microservices-net
+    depends_on:
+      - eureka
+      - config-server
+    restart: always
+
+
+  # ==========================
+  #  COMPANY SERVICE
+  # ==========================
+  company-service:
+    build: ./companyms
+    container_name: company-service
+    ports:
+      - "8081:8081"
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/company
+      SPRING_DATASOURCE_USERNAME: embarkx
+      SPRING_DATASOURCE_PASSWORD: embarkx
+    networks:
+      - microservices-net
+    depends_on:
+      - postgres
+      - rabbitmq
+      - config-server
+      - eureka
+    restart: always
+
+
+  # ==========================
+  #  JOB SERVICE
+  # ==========================
+  job-service:
+    build: ./jobms
+    container_name: job-service
+    ports:
+      - "8082:8082"
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/job
+      SPRING_DATASOURCE_USERNAME: embarkx
+      SPRING_DATASOURCE_PASSWORD: embarkx
+    networks:
+      - microservices-net
+    depends_on:
+      - postgres
+      - rabbitmq
+      - eureka
+      - config-server
+      - company-service
+    restart: always
+
+
+  # ==========================
+  #  REVIEW SERVICE
+  # ==========================
+  review-service:
+    build: ./reviewms
+    container_name: review-service
+    ports:
+      - "8083:8083"
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/review
+      SPRING_DATASOURCE_USERNAME: embarkx
+      SPRING_DATASOURCE_PASSWORD: embarkx
+    networks:
+      - microservices-net
+    depends_on:
+      - postgres
+      - rabbitmq
+      - eureka
+      - config-server
+    restart: always
+
+
+# ==========================
+#  NETWORKS & VOLUMES
+# ==========================
+networks:
+  microservices-net:
+    driver: bridge
+
+volumes:
+  pgdata:
