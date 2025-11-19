@@ -80,11 +80,15 @@ Java 17+ (or your version)
     cd jobms && ./mvnw spring-boot:run
     cd reviewms && ./mvnw spring-boot:run
 
-4. docker-compose up --build
+
+## OR 
+
+docker-compose up --build
    ```bash
     docker-compose up --build
+  ```
    
-5. Access the API Gateway at http://localhost:8080 (or configured port) and use the REST endpoints for each service.
+4. Access the API Gateway at http://localhost:8080 (or configured port) and use the REST endpoints for each service.
 
 ---
 
