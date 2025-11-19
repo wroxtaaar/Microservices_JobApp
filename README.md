@@ -69,7 +69,7 @@ Java 17+ (or your version)
    cd Microservices_JobApp
 
 
-2. docker-compose up --build
+2. Use Docker
    ```bash
     docker-compose up --build
    ```
