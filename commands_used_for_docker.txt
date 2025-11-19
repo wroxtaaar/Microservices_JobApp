@@ -1,0 +1,61 @@
+docker logs -f eureka
+
+docker logs -f config-server
+
+docker logs -f gateway
+
+docker logs -f company-service
+
+docker logs -f job-service
+
+docker logs -f review-service
+
+
+docker compose restart gateway
+
+docker compose restart config-server
+
+
+docker compose down
+docker compose up -d --build
+
+
+docker compose down
+docker compose rm -f
+docker system prune -af
+docker compose up -d --build
+
+docker compose build --no-cache
+
+
+
+./clean-restart.sh
+
+
+--Remove all containers (optional full cleanup)
+docker rm $(docker ps -aq)  
+
+
+
+---confirm pgAdmin is running
+docker logs pgadmin
+
+
+
+docker compose down --volumes --remove-orphans
+docker system prune -af
+docker volume prune -f
+docker compose up -d --build
+
+
+docker compose down --volumes --remove-orphans
+docker system prune -af
+docker volume prune -f
+docker compose up -d postgres pgadmin
+
+
+docker logs pgadmin
+
+
+chmod +x postgres_clean.sh
+./postgres_clean.sh
