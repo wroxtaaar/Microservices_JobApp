@@ -69,3 +69,8 @@ docker logs pgadmin
 
 chmod +x postgres_clean.sh
 ./postgres_clean.sh
+
+
+
+chmod +x docker_clean.sh
+./docker_clean.sh
