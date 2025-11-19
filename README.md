@@ -70,7 +70,14 @@ Java 17+ (or your version)
 
 2. Start PostgreSQL (via Docker) if using production mode. Or skip for H2.
 
-3. Build and run each module/service:
+3. docker-compose up --build
+   ```bash
+    docker-compose up --build
+   ```
+
+## OR
+
+  Build and run each module/service:
 
    ```bash
     cd service-reg && ./mvnw spring-boot:run
@@ -79,14 +86,10 @@ Java 17+ (or your version)
     cd companyms && ./mvnw spring-boot:run
     cd jobms && ./mvnw spring-boot:run
     cd reviewms && ./mvnw spring-boot:run
+   ```
 
 
-## OR 
-
-docker-compose up --build
-   ```bash
-    docker-compose up --build
-  ```
+  
    
 4. Access the API Gateway at http://localhost:8080 (or configured port) and use the REST endpoints for each service.
 
