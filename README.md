@@ -68,9 +68,8 @@ Java 17+ (or your version)
    git clone https://github.com/wroxtaaar/Microservices_JobApp.git
    cd Microservices_JobApp
 
-2. Start PostgreSQL (via Docker) if using production mode. Or skip for H2.
 
-3. docker-compose up --build
+2. docker-compose up --build
    ```bash
     docker-compose up --build
    ```
@@ -91,7 +90,7 @@ Java 17+ (or your version)
 
   
    
-4. Access the API Gateway at http://localhost:8080 (or configured port) and use the REST endpoints for each service.
+3. Access the API Gateway at http://localhost:8080 (or configured port) and use the REST endpoints for each service.
 
 ---
 
