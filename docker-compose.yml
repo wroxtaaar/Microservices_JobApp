@@ -3,39 +3,39 @@ services:
   # ==========================
   #  PGADMIN
   # ==========================
-  pgadmin:
-    image: dpage/pgadmin4
-    container_name: pgadmin
-    environment:
-      PGADMIN_DEFAULT_EMAIL: pgadmin4@pgadmin.org
-      PGADMIN_DEFAULT_PASSWORD: admin
-    volumes:
-      - pgadmin-data:/var/lib/pgadmin
-    ports:
-      - "5050:80"
-    networks:
-      - microservices-net
-    restart: always
+  # pgadmin:
+  #   image: dpage/pgadmin4
+  #   container_name: pgadmin
+  #   environment:
+  #     PGADMIN_DEFAULT_EMAIL: pgadmin4@pgadmin.org
+  #     PGADMIN_DEFAULT_PASSWORD: admin
+  #   volumes:
+  #     - pgadmin-data:/var/lib/pgadmin
+  #   ports:
+  #     - "5050:80"
+  #   networks:
+  #     - microservices-net
+  #   restart: always
 
 
 
   # ==========================
   #  POSTGRESQL
   # ==========================
-  postgres:
-    image: postgres:15
-    container_name: postgres
-    environment:
-      POSTGRES_USER: embarkx
-      POSTGRES_PASSWORD: embarkx
-    ports:
-      - "5432:5432"
-    volumes:
-      - pgdata:/var/lib/postgresql/data
-      - ./postgres-init.sql:/docker-entrypoint-initdb.d/postgres-init.sql
-    networks:
-      - microservices-net
-    restart: always
+  # postgres:
+  #   image: postgres:15
+  #   container_name: postgres
+  #   environment:
+  #     POSTGRES_USER: embarkx
+  #     POSTGRES_PASSWORD: embarkx
+  #   ports:
+  #     - "5432:5432"
+  #   volumes:
+  #     - pgdata:/var/lib/postgresql/data
+  #     - ./postgres-init.sql:/docker-entrypoint-initdb.d/postgres-init.sql
+  #   networks:
+  #     - microservices-net
+  #   restart: always
 
 
   # ==========================
@@ -127,13 +127,27 @@ services:
       - "8081:8081"
     environment:
       SPRING_PROFILES_ACTIVE: docker
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/company
-      SPRING_DATASOURCE_USERNAME: embarkx
-      SPRING_DATASOURCE_PASSWORD: embarkx
+      # SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/company
+      # SPRING_DATASOURCE_USERNAME: embarkx
+      # SPRING_DATASOURCE_PASSWORD: embarkx
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgresql-wroxtaar.alwaysdata.net:5432/wroxtaar_companydb
+      SPRING_DATASOURCE_USERNAME: wroxtaar
+      SPRING_DATASOURCE_PASSWORD: "9205@bCD"
+
+      # HikariCP Fixes
+      SPRING_DATASOURCE_HIKARI_MAX_LIFETIME: 300000
+      SPRING_DATASOURCE_HIKARI_IDLE_TIMEOUT: 200000
+      SPRING_DATASOURCE_HIKARI_CONNECTION_TIMEOUT: 30000
+      SPRING_DATASOURCE_HIKARI_VALIDATION_TIMEOUT: 5000
+      SPRING_DATASOURCE_HIKARI_MINIMUM_IDLE: 2
+      SPRING_DATASOURCE_HIKARI_MAXIMUM_POOL_SIZE: 10
+      SPRING_DATASOURCE_HIKARI_KEEPALIVE_TIME: 30000
+
+
     networks:
       - microservices-net
     depends_on:
-      - postgres
+      # - postgres
       - rabbitmq
       - config-server
       - eureka
@@ -150,13 +164,27 @@ services:
       - "8082:8082"
     environment:
       SPRING_PROFILES_ACTIVE: docker
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/job
-      SPRING_DATASOURCE_USERNAME: embarkx
-      SPRING_DATASOURCE_PASSWORD: embarkx
+      # SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/job
+      # SPRING_DATASOURCE_USERNAME: embarkx
+      # SPRING_DATASOURCE_PASSWORD: embarkx
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgresql-wroxtaar.alwaysdata.net:5432/wroxtaar_jobdb
+      SPRING_DATASOURCE_USERNAME: wroxtaar
+      SPRING_DATASOURCE_PASSWORD: "9205@bCD"
+
+      # HikariCP Fixes
+      SPRING_DATASOURCE_HIKARI_MAX_LIFETIME: 300000
+      SPRING_DATASOURCE_HIKARI_IDLE_TIMEOUT: 200000
+      SPRING_DATASOURCE_HIKARI_CONNECTION_TIMEOUT: 30000
+      SPRING_DATASOURCE_HIKARI_VALIDATION_TIMEOUT: 5000
+      SPRING_DATASOURCE_HIKARI_MINIMUM_IDLE: 2
+      SPRING_DATASOURCE_HIKARI_MAXIMUM_POOL_SIZE: 10
+      SPRING_DATASOURCE_HIKARI_KEEPALIVE_TIME: 30000
+
+
     networks:
       - microservices-net
     depends_on:
-      - postgres
+      # - postgres
       - rabbitmq
       - eureka
       - config-server
@@ -174,13 +202,27 @@ services:
       - "8083:8083"
     environment:
       SPRING_PROFILES_ACTIVE: docker
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/review
-      SPRING_DATASOURCE_USERNAME: embarkx
-      SPRING_DATASOURCE_PASSWORD: embarkx
+      # SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/review
+      # SPRING_DATASOURCE_USERNAME: embarkx
+      # SPRING_DATASOURCE_PASSWORD: embarkx
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgresql-wroxtaar.alwaysdata.net:5432/wroxtaar_reviewdb
+      SPRING_DATASOURCE_USERNAME: wroxtaar
+      SPRING_DATASOURCE_PASSWORD: "9205@bCD"
+
+      # HikariCP Fixes
+      SPRING_DATASOURCE_HIKARI_MAX_LIFETIME: 300000
+      SPRING_DATASOURCE_HIKARI_IDLE_TIMEOUT: 200000
+      SPRING_DATASOURCE_HIKARI_CONNECTION_TIMEOUT: 30000
+      SPRING_DATASOURCE_HIKARI_VALIDATION_TIMEOUT: 5000
+      SPRING_DATASOURCE_HIKARI_MINIMUM_IDLE: 2
+      SPRING_DATASOURCE_HIKARI_MAXIMUM_POOL_SIZE: 10
+      SPRING_DATASOURCE_HIKARI_KEEPALIVE_TIME: 30000
+
+      
     networks:
       - microservices-net
     depends_on:
-      - postgres
+      # - postgres
       - rabbitmq
       - eureka
       - config-server
