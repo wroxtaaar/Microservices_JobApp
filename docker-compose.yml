@@ -126,24 +126,7 @@ services:
     ports:
       - "8081:8081"
     environment:
-      SPRING_PROFILES_ACTIVE: docker
-      # SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/company
-      # SPRING_DATASOURCE_USERNAME: embarkx
-      # SPRING_DATASOURCE_PASSWORD: embarkx
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgresql-wroxtaar.alwaysdata.net:5432/wroxtaar_companydb
-      SPRING_DATASOURCE_USERNAME: wroxtaar
-      SPRING_DATASOURCE_PASSWORD: "9205@bCD"
-
-      # HikariCP Fixes
-      SPRING_DATASOURCE_HIKARI_MAX_LIFETIME: 300000
-      SPRING_DATASOURCE_HIKARI_IDLE_TIMEOUT: 200000
-      SPRING_DATASOURCE_HIKARI_CONNECTION_TIMEOUT: 30000
-      SPRING_DATASOURCE_HIKARI_VALIDATION_TIMEOUT: 5000
-      SPRING_DATASOURCE_HIKARI_MINIMUM_IDLE: 2
-      SPRING_DATASOURCE_HIKARI_MAXIMUM_POOL_SIZE: 10
-      SPRING_DATASOURCE_HIKARI_KEEPALIVE_TIME: 30000
-
-
+      SPRING_PROFILES_ACTIVE: h2
     networks:
       - microservices-net
     depends_on:
@@ -163,24 +146,7 @@ services:
     ports:
       - "8082:8082"
     environment:
-      SPRING_PROFILES_ACTIVE: docker
-      # SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/job
-      # SPRING_DATASOURCE_USERNAME: embarkx
-      # SPRING_DATASOURCE_PASSWORD: embarkx
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgresql-wroxtaar.alwaysdata.net:5432/wroxtaar_jobdb
-      SPRING_DATASOURCE_USERNAME: wroxtaar
-      SPRING_DATASOURCE_PASSWORD: "9205@bCD"
-
-      # HikariCP Fixes
-      SPRING_DATASOURCE_HIKARI_MAX_LIFETIME: 300000
-      SPRING_DATASOURCE_HIKARI_IDLE_TIMEOUT: 200000
-      SPRING_DATASOURCE_HIKARI_CONNECTION_TIMEOUT: 30000
-      SPRING_DATASOURCE_HIKARI_VALIDATION_TIMEOUT: 5000
-      SPRING_DATASOURCE_HIKARI_MINIMUM_IDLE: 2
-      SPRING_DATASOURCE_HIKARI_MAXIMUM_POOL_SIZE: 10
-      SPRING_DATASOURCE_HIKARI_KEEPALIVE_TIME: 30000
-
-
+      SPRING_PROFILES_ACTIVE: h2
     networks:
       - microservices-net
     depends_on:
@@ -201,24 +167,7 @@ services:
     ports:
       - "8083:8083"
     environment:
-      SPRING_PROFILES_ACTIVE: docker
-      # SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/review
-      # SPRING_DATASOURCE_USERNAME: embarkx
-      # SPRING_DATASOURCE_PASSWORD: embarkx
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgresql-wroxtaar.alwaysdata.net:5432/wroxtaar_reviewdb
-      SPRING_DATASOURCE_USERNAME: wroxtaar
-      SPRING_DATASOURCE_PASSWORD: "9205@bCD"
-
-      # HikariCP Fixes
-      SPRING_DATASOURCE_HIKARI_MAX_LIFETIME: 300000
-      SPRING_DATASOURCE_HIKARI_IDLE_TIMEOUT: 200000
-      SPRING_DATASOURCE_HIKARI_CONNECTION_TIMEOUT: 30000
-      SPRING_DATASOURCE_HIKARI_VALIDATION_TIMEOUT: 5000
-      SPRING_DATASOURCE_HIKARI_MINIMUM_IDLE: 2
-      SPRING_DATASOURCE_HIKARI_MAXIMUM_POOL_SIZE: 10
-      SPRING_DATASOURCE_HIKARI_KEEPALIVE_TIME: 30000
-
-      
+      SPRING_PROFILES_ACTIVE: h2
     networks:
       - microservices-net
     depends_on:

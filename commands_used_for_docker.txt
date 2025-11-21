@@ -11,7 +11,7 @@ docker logs -f job-service
 docker logs -f review-service
 
 
-docker compose restart gateway
+docker compose restart company-service
 
 docker compose restart config-server
 
