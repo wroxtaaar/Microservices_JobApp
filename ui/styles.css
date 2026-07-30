@@ -59,3 +59,8 @@ input::placeholder, textarea::placeholder { color: #7d8aa3; }
 .small-btn { padding: 6px 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.06); background: transparent; color: var(--text); cursor: pointer; font-size: 0.9rem; }
 .small-btn:hover { transform: translateY(-1px); }
 .small-btn.danger { background: rgba(255,90,90,0.06); border-color: rgba(255,90,90,0.16); color: #ffb4b4; }
+
+/* Ensure selects and option lists match dark theme */
+select { color: var(--text); background: rgba(255,255,255,0.04); }
+select option, select optgroup { background: var(--panel-2); color: var(--text); }
+select:focus { outline: 2px solid rgba(76,201,240,0.12); }
