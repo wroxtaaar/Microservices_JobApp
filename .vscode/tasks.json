@@ -1,0 +1,83 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Eureka Logs",
+      "type": "shell",
+      "command": "docker logs -f eureka",
+      "isBackground": true,
+      "presentation": {
+        "panel": "dedicated",
+        "group": "logs",
+        "reveal": "always"
+      }
+    },
+    {
+      "label": "Config Logs",
+      "type": "shell",
+      "command": "docker logs -f config-server",
+      "isBackground": true,
+      "presentation": {
+        "panel": "dedicated",
+        "group": "logs",
+        "reveal": "always"
+      }
+    },
+    {
+      "label": "Gateway Logs",
+      "type": "shell",
+      "command": "docker logs -f gateway",
+      "isBackground": true,
+      "presentation": {
+        "panel": "dedicated",
+        "group": "logs",
+        "reveal": "always"
+      }
+    },
+    {
+      "label": "Company Logs",
+      "type": "shell",
+      "command": "docker logs -f company-service",
+      "isBackground": true,
+      "presentation": {
+        "panel": "dedicated",
+        "group": "logs",
+        "reveal": "always"
+      }
+    },
+    {
+      "label": "Job Logs",
+      "type": "shell",
+      "command": "docker logs -f job-service",
+      "isBackground": true,
+      "presentation": {
+        "panel": "dedicated",
+        "group": "logs",
+        "reveal": "always"
+      }
+    },
+    {
+      "label": "Review Logs",
+      "type": "shell",
+      "command": "docker logs -f review-service",
+      "isBackground": true,
+      "presentation": {
+        "panel": "dedicated",
+        "group": "logs",
+        "reveal": "always"
+      }
+    },
+    {
+      "label": "All Logs",
+      "dependsOn": [
+        "Eureka Logs",
+        "Config Logs",
+        "Gateway Logs",
+        "Company Logs",
+        "Job Logs",
+        "Review Logs"
+      ],
+      "dependsOrder": "parallel"
+    }
+  ]
+}

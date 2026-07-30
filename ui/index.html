@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JobApp Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="hero">
+        <div>
+          <p class="eyebrow">Microservices Job Platform</p>
+          <h1>Track companies, jobs, and reviews from one place.</h1>
+          <p class="hero-copy">
+            This dashboard connects to the gateway API and gives you a fast overview of the platform.
+          </p>
+        </div>
+        <button id="refreshBtn" class="primary-btn">Refresh data</button>
+      </header>
+
+      <div id="status" class="status">Loading platform data…</div>
+
+      <main class="dashboard-grid">
+        <section class="panel">
+          <div class="panel-head">
+            <h2>Companies</h2>
+            <span class="pill" id="companyCount">0</span>
+          </div>
+          <div id="companiesList" class="card-list"></div>
+          <form id="companyForm" class="stack-form">
+            <h3>Add company</h3>
+            <input type="text" name="name" placeholder="Company name" required />
+            <textarea name="description" placeholder="Short description" rows="3"></textarea>
+            <button type="submit" class="primary-btn">Create company</button>
+          </form>
+        </section>
+
+        <section class="panel">
+          <div class="panel-head">
+            <h2>Jobs</h2>
+            <span class="pill" id="jobCount">0</span>
+          </div>
+          <div id="jobsList" class="card-list"></div>
+          <form id="jobForm" class="stack-form">
+            <h3>Post a job</h3>
+            <input type="text" name="title" placeholder="Job title" required />
+            <textarea name="description" placeholder="Description" rows="3"></textarea>
+            <div class="inline-fields">
+              <input type="text" name="minSalary" placeholder="Min salary" />
+              <input type="text" name="maxSalary" placeholder="Max salary" />
+            </div>
+            <input type="text" name="location" placeholder="Location" />
+            <select name="companyId" id="jobCompanySelect" required></select>
+            <button type="submit" class="primary-btn">Create job</button>
+          </form>
+        </section>
+
+        <section class="panel reviews-panel">
+          <div class="panel-head">
+            <h2>Reviews</h2>
+            <span class="pill" id="reviewCount">0</span>
+          </div>
+          <label class="select-label" for="companyReviewSelect">Choose company</label>
+          <select id="companyReviewSelect"></select>
+          <div id="reviewSummary" class="summary-card"></div>
+          <div id="reviewsList" class="card-list"></div>
+          <form id="reviewForm" class="stack-form">
+            <h3>Add review</h3>
+            <input type="text" name="title" placeholder="Review title" required />
+            <textarea name="description" placeholder="What stood out?" rows="3"></textarea>
+            <input type="number" name="rating" min="1" max="5" step="0.5" placeholder="Rating" required />
+            <select name="companyId" id="reviewCompanySelect" required></select>
+            <button type="submit" class="primary-btn">Create review</button>
+          </form>
+        </section>
+      </main>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>

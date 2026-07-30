@@ -109,6 +109,21 @@ services:
 
 
   # ==========================
+  #  FRONTEND UI
+  # ==========================
+  ui:
+    build: ./ui
+    container_name: ui
+    ports:
+      - "3100:80"
+    networks:
+      - microservices-net
+    depends_on:
+      - gateway
+    restart: always
+
+
+  # ==========================
   #  API GATEWAY
   # ==========================
   gateway:

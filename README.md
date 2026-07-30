@@ -62,6 +62,19 @@ Java 17+ (or your version)
 - Docker & Docker Compose  
 - Git  
 
+### Frontend UI
+A lightweight dashboard is included in the UI folder so you can browse the platform in a browser.
+
+Run it with:
+```bash
+cd ui
+python3 -m http.server 3000
+```
+
+Then open http://localhost:3000 for the local static server, or http://localhost:3100 when using Docker Compose.
+
+If you are using GitHub Codespaces, open the forwarded port for the UI (3000) and the gateway (8080). The UI will automatically target the forwarded gateway URL from the current host.
+
 ### Run Locally  
 1. Clone the repository:  
    ```bash
