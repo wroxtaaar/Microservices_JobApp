@@ -90,6 +90,10 @@ function renderCompanies() {
       <h3>${company.name}</h3>
       <p>${company.description || 'No description available.'}</p>
       <p>Rating: ${company.rating ?? 'N/A'}</p>
+      <div class="card-actions">
+        <button class="small-btn" onclick="editCompany(${company.id})">Edit</button>
+        <button class="small-btn danger" onclick="deleteCompany(${company.id})">Delete</button>
+      </div>
     </article>
   `).join('');
 }
@@ -106,6 +110,10 @@ function renderJobs() {
       <h3>${job.title}</h3>
       <p>${job.description || 'No description yet.'}</p>
       <p>${job.location || 'Remote'} • ${job.minSalary || '?'} - ${job.maxSalary || '?'}</p>
+      <div class="card-actions">
+        <button class="small-btn" onclick="editJob(${job.id})">Edit</button>
+        <button class="small-btn danger" onclick="deleteJob(${job.id})">Delete</button>
+      </div>
     </article>
   `).join('');
 }
@@ -141,11 +149,108 @@ async function loadReviews(companyId = '') {
         <h3>${review.title}</h3>
         <p>${review.description || 'No detail provided.'}</p>
         <p>Rating: ${review.rating}/5</p>
+        <div class="card-actions">
+          <button class="small-btn" onclick="editReview(${review.id}, ${review.companyId})">Edit</button>
+          <button class="small-btn danger" onclick="deleteReview(${review.id}, ${review.companyId})">Delete</button>
+        </div>
       </article>
     `).join('');
   } catch (error) {
     console.error(error);
     setStatus(`Could not load reviews: ${error.message}`, true);
+  }
+}
+
+// --- CRUD helpers for UI actions
+async function deleteCompany(id) {
+  try {
+    const base = await resolveApiBase();
+    await fetchJson(`${base}/companies/${id}`, { method: 'DELETE' });
+    await loadData();
+    setStatus('Company deleted.');
+  } catch (err) {
+    setStatus(`Delete failed: ${err.message}`, true);
+  }
+}
+
+async function editCompany(id) {
+  try {
+    const base = await resolveApiBase();
+    const existing = await fetchJson(`${base}/companies/${id}`);
+    const name = prompt('Company name', existing.name);
+    if (name === null) return;
+    const description = prompt('Description', existing.description || '');
+    if (description === null) return;
+    const payload = { id: existing.id, name, description, rating: existing.rating || 0 };
+    await fetchJson(`${base}/companies/${id}`, { method: 'PUT', body: JSON.stringify(payload) });
+    await loadData();
+    setStatus('Company updated.');
+  } catch (err) {
+    setStatus(`Update failed: ${err.message}`, true);
+  }
+}
+
+async function deleteJob(id) {
+  try {
+    const base = await resolveApiBase();
+    await fetchJson(`${base}/jobs/${id}`, { method: 'DELETE' });
+    await loadData();
+    setStatus('Job deleted.');
+  } catch (err) {
+    setStatus(`Delete failed: ${err.message}`, true);
+  }
+}
+
+async function editJob(id) {
+  try {
+    const base = await resolveApiBase();
+    const existing = await fetchJson(`${base}/jobs/${id}`);
+    const title = prompt('Job title', existing.title);
+    if (title === null) return;
+    const description = prompt('Description', existing.description || '');
+    if (description === null) return;
+    const minSalary = prompt('Min salary', existing.minSalary || '');
+    if (minSalary === null) return;
+    const maxSalary = prompt('Max salary', existing.maxSalary || '');
+    if (maxSalary === null) return;
+    const location = prompt('Location', existing.location || '');
+    if (location === null) return;
+    const payload = { id: existing.id, title, description, minSalary, maxSalary, location, companyId: existing.companyId };
+    await fetchJson(`${base}/jobs/${id}`, { method: 'PUT', body: JSON.stringify(payload) });
+    await loadData();
+    setStatus('Job updated.');
+  } catch (err) {
+    setStatus(`Update failed: ${err.message}`, true);
+  }
+}
+
+async function deleteReview(id, companyId) {
+  try {
+    const base = await resolveApiBase();
+    await fetchJson(`${base}/reviews/${id}`, { method: 'DELETE' });
+    await loadReviews(companyId);
+    setStatus('Review deleted.');
+  } catch (err) {
+    setStatus(`Delete failed: ${err.message}`, true);
+  }
+}
+
+async function editReview(id, companyId) {
+  try {
+    const base = await resolveApiBase();
+    const existing = await fetchJson(`${base}/reviews/${id}`);
+    const title = prompt('Review title', existing.title);
+    if (title === null) return;
+    const description = prompt('Description', existing.description || '');
+    if (description === null) return;
+    const rating = prompt('Rating (1-5)', existing.rating || 5);
+    if (rating === null) return;
+    const payload = { id: existing.id, title, description, rating: Number(rating), companyId: existing.companyId };
+    await fetchJson(`${base}/reviews/${id}`, { method: 'PUT', body: JSON.stringify(payload) });
+    await loadReviews(companyId);
+    setStatus('Review updated.');
+  } catch (err) {
+    setStatus(`Update failed: ${err.message}`, true);
   }
 }
 
